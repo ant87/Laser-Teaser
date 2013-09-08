@@ -75,6 +75,8 @@ class Panel extends View implements OnTouchListener
 	LightModel light;
 	
 	private boolean onSelectArea = false;
+	
+	Rect clipRect = new Rect();
 
 	 Thread thread = null;
 	    SurfaceHolder surfaceHolder;
@@ -184,16 +186,16 @@ reflectorPaint.setStrokeWidth(axis/20);
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
+	
 	public void onDraw(final Canvas canvas)
 	{
 		super.onDraw(canvas);
 
 		////System.out.println("ondraw " + test1++);
-		Rect rect = canvas.getClipBounds();
+		canvas.getClipBounds(clipRect);
 		
-		int height = rect.height();
-		int width = rect.width();
+		int height = clipRect.height();
+		int width = clipRect.width();
 		ArrayList<ReflectorManager.Reflector> refList = light
 				.getReflectorList();
 		ArrayList<RayManager.SourceRay> sourceRayList = light
@@ -201,7 +203,7 @@ reflectorPaint.setStrokeWidth(axis/20);
 
 		Panel.x++;
 
-		backgroundPaint.setBounds(rect);
+		backgroundPaint.setBounds(clipRect);
 
 		backgroundPaint.draw(canvas);
 
@@ -510,7 +512,7 @@ reflectorPaint.setStrokeWidth(axis/20);
 		
 		
 		
-		int screenMid = rect.width()/2;
+		int screenMid = clipRect.width()/2;
 	    int yoff = 0;
 	    for (String line : lines)
 	    {

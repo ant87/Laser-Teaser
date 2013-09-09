@@ -2,7 +2,7 @@ package com.azim.laserteaser;
 
 import java.util.ArrayList;
 
-import com.azimov.laserteaser.R;
+import com.azim.laserteaser.R;
 
 import android.app.Activity;
 import android.content.Context;

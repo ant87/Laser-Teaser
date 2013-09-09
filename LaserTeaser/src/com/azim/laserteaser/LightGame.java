@@ -101,7 +101,7 @@ public class LightGame
 		  case 1:
 			  
 			  msg = "Green reflectors rotate to point to your finger.\n"+
-			  "White reflectors do not move\n."+"\n"+""+"\n"+"\n"+""+"\n" +                             
+			  "White reflectors do not move.\n" +                             
 			  "The yellow target is only set by the yellow beam"; 
 			  break;
 		  
@@ -220,8 +220,8 @@ public class LightGame
 				dout.writeByte(raySourceList.size());
 				for (RayManager.SourceRay sr : raySourceList)
 				{
-					dout.writeByte(sr.source.x/(light.AXIS_LENGTH/2));
-					dout.writeByte(sr.source.y/(light.AXIS_LENGTH/2));
+					dout.writeByte((sr.source.x*2)/light.AXIS_LENGTH);/* x/(half axis) */
+					dout.writeByte((sr.source.y*2)/light.AXIS_LENGTH);/* y/(half axis) */
 					dout.writeDouble(sr.angle);
 					
 					/* spare */
@@ -238,8 +238,8 @@ public class LightGame
 				dout.writeByte(reflectorList.size());
 				for (ReflectorManager.Reflector ref : reflectorList)
 				{
-					dout.writeByte(ref.getMidPoint().x/(light.AXIS_LENGTH/2));
-					dout.writeByte(ref.getMidPoint().y/(light.AXIS_LENGTH/2));
+					dout.writeByte((ref.getMidPoint().x*2)/light.AXIS_LENGTH);
+					dout.writeByte((ref.getMidPoint().y*2)/light.AXIS_LENGTH);
 					//dout.writeInt(ref.getLength());
 					dout.writeDouble(ref.getAngle());
 					
@@ -257,8 +257,8 @@ public class LightGame
 				dout.writeByte(targetList.size());
 				for (TargetManager.Target t : targetList)
 				{
-					dout.writeByte(t.x/(light.AXIS_LENGTH/2));
-					dout.writeByte(t.y/(light.AXIS_LENGTH/2));
+					dout.writeByte((t.x*2)/light.AXIS_LENGTH);
+					dout.writeByte((t.y*2)/light.AXIS_LENGTH);
 					dout.writeByte(t.getId());
 					
 					/* spare */
@@ -274,9 +274,7 @@ public class LightGame
 				}
 				
 				dout.close();
-				// out.writeObject(raySourceList);
-				// out.close();
-				//System.out.println("level  saved");
+				
 			} catch (IOException ex)
 			{
 				ex.printStackTrace();
@@ -380,8 +378,8 @@ public class LightGame
 
 			for (int x = 0; x < numOfRays; x++)
 			{
-				int sourceX = dis.readByte()*(light.AXIS_LENGTH/2);
-				int sourceY = dis.readByte()*(light.AXIS_LENGTH/2);
+				int sourceX = (dis.readByte()*light.AXIS_LENGTH)/2;
+				int sourceY = (dis.readByte()*light.AXIS_LENGTH)/2;
 				double angle = dis.readDouble();
 				
 				/* spare */
@@ -403,9 +401,9 @@ public class LightGame
 
 			for (int x = 0; x < numOfRefs; x++)
 			{
-				int midX = dis.readByte()*(light.AXIS_LENGTH/2);
-				int midY = dis.readByte()*(light.AXIS_LENGTH/2);
-				//int length = 100;// dis.readInt();
+				int midX = (dis.readByte()*light.AXIS_LENGTH)/2;
+				int midY = (dis.readByte()*light.AXIS_LENGTH)/2;
+				
 				double angle = dis.readDouble();
 				
 				/* spare */
@@ -428,8 +426,8 @@ public class LightGame
 
 			for (int x = 0; x < numOfTargets; x++)
 			{
-				int tX = dis.readByte()*(light.AXIS_LENGTH/2);
-				int tY = dis.readByte()*(light.AXIS_LENGTH/2);
+				int tX = (dis.readByte()*light.AXIS_LENGTH)/2;
+				int tY = (dis.readByte()*light.AXIS_LENGTH)/2;
 				int id = dis.readByte();
 				
 				/* spare */

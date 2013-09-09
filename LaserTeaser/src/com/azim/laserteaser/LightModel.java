@@ -409,11 +409,6 @@ public class LightModel extends Observable
 		TargetManager.createTarget(10, 30 + (TargetManager.getTargetList().size() * 50));
 	}
 	
-	/*public void createTarget(int x, int y)
-	{
-		TargetManager.createTarget(x,y);
-	}*/
-	
 	public void createTarget(int x, int y, int id)
 	{
 		TargetManager.createTarget(x,y, id);

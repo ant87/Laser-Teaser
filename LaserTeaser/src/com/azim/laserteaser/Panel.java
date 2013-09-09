@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.azimov.laserteaser.R;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
@@ -30,6 +31,8 @@ class Panel extends View implements OnTouchListener
 
 	
 	static int test1 = 0;
+	
+	private Activity parent;
 	
 
 
@@ -83,6 +86,7 @@ class Panel extends View implements OnTouchListener
 	    volatile boolean running = false;
 	    
 	    Drawable arrowIcon;
+	    Drawable menuIcon;
 	    
 	    ColorMatrix matrix=  new ColorMatrix(new float[]{
 	    		   1,1,1,1,1
@@ -118,6 +122,7 @@ class Panel extends View implements OnTouchListener
 		
 		this.light = light;
 		int axis = light.AXIS_LENGTH;
+		this.parent = (Activity)context;
 	//	surfaceHolder = getHolder();
 	//	setBackgroundColor(Color.DKGRAY);
 
@@ -171,6 +176,7 @@ class Panel extends View implements OnTouchListener
 reflectorPaint.setStrokeWidth(axis/20);
 		
 		arrowIcon = getResources().getDrawable( R.drawable.ic_arrow );
+		menuIcon = getResources().getDrawable( R.drawable.ic_faq_icon );
 	
 	
 		
@@ -501,6 +507,13 @@ reflectorPaint.setStrokeWidth(axis/20);
 		arrowIcon.setBounds(width-(int)(light.AXIS_LENGTH*(1-wMargin)), (int)(light.AXIS_LENGTH*hMargin), width-(int)(light.AXIS_LENGTH*wMargin), (int)(light.AXIS_LENGTH*(1-hMargin)));
 		arrowIcon.draw(canvas);
 		
+		if (LightGame.getInstance().mode == LightGame.PLAY)
+	    	menuIcon.setBounds((int)(light.AXIS_LENGTH*(wMargin)), (int)(light.AXIS_LENGTH*hMargin), (int)(light.AXIS_LENGTH*(1-wMargin)), (int)(light.AXIS_LENGTH*(1-hMargin)));
+		else
+			menuIcon.setBounds((int)(light.AXIS_LENGTH*(wMargin))+light.AXIS_LENGTH, (int)(light.AXIS_LENGTH*hMargin), (int)(light.AXIS_LENGTH*(1-wMargin))+light.AXIS_LENGTH, (int)(light.AXIS_LENGTH*(1-hMargin)));
+			
+		menuIcon.draw(canvas);
+		
 		/*************Show message ***********************/
 		String msg = light.getMessage();
 		
@@ -513,13 +526,13 @@ reflectorPaint.setStrokeWidth(axis/20);
 		
 		
 		int screenMid = clipRect.width()/2;
-	    int yoff = 0;
+	    int yoff = light.AXIS_LENGTH/2 ;
 	    for (String line : lines)
 	    {
 	       
 	    	textPaint.getTextBounds(line, 0, line.length(), textBounds);
-	        canvas.drawText(line, screenMid - (textBounds.width()/2), light.AXIS_LENGTH/2 + yoff, textPaint);
-	        yoff += textBounds.height();
+	        canvas.drawText(line, screenMid - (textBounds.width()/2), yoff, textPaint);
+	        yoff += textBounds.height()+(textBounds.height()/4);
 	    }
 		}
 
@@ -597,6 +610,7 @@ reflectorPaint.setStrokeWidth(axis/20);
 				if(light.mousePressed(evt)== false)
 				
 				{
+					/* Cycle select button pressed */
 					if( (x>=(getWidth()-light.AXIS_LENGTH))&& (y<=light.AXIS_LENGTH))
 					{
 	
@@ -606,6 +620,28 @@ reflectorPaint.setStrokeWidth(axis/20);
 						cycleSelected = true;
 						return true;
 			       
+					}
+					if(LightGame.getInstance().mode == LightGame.PLAY)
+					{
+					
+						if( (x<light.AXIS_LENGTH)&& (y<=light.AXIS_LENGTH))
+						{
+		
+							parent.openOptionsMenu();
+							return true;
+				       
+						}
+					}
+					else
+					{
+						if( x<(light.AXIS_LENGTH*2)&& (x>light.AXIS_LENGTH) && (y<=light.AXIS_LENGTH))
+						{
+		
+							parent.openOptionsMenu();
+							return true;
+				       
+						}
+						
 					}
 				}
 			}

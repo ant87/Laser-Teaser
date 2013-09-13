@@ -1,9 +1,6 @@
 package com.azim.laserteaser;
 
 import java.util.ArrayList;
-
-import com.azim.laserteaser.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.BlurMaskFilter;

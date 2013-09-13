@@ -281,9 +281,9 @@ public class LevelActivity extends Activity
 			return true;
 		case 16:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage("Drag the reflectors into the laser beam to guide it to the targets. \nThe level is complete when all targets are activated. \n\n"+ 
-					"White targets can be activated by any beam. Coloured targets can only be activated by a beam of matching colour. \n\nGreen reflectors rotate about their mid-point. Press to select them and move your finger away as if to drag it. The reflector will rotate to point to your finger.\n White reflectors do not move\n\n "+
-					"Tapping the arrow in the top right corner of the screen will cause each reflector to be selected, in turn, from left to right. Drag on any empty space on the screen, and the selected reflector will follow. This is useful when a reflector is difficult to select due to being to close to other objects or the if the screen is overcrowded").setCancelable(true)
+			builder.setMessage("Drag the reflectors into the beam to guide the laser through the targets. \nThe level is complete when all targets are activated. \n\n"+ 
+					"White targets can be activated by any beam. Coloured targets can only be activated by a beam of matching colour. \n\nGreen reflectors rotate about their mid-point. Press to select and then move your finger away as if to drag the reflector. This will cause it to rotate to point to your finger.\n White reflectors do not move\n\n "+
+					"Tapping the arrow in the top right corner of the screen will cause each reflector to be selected, in turn, from left to right. Drag on any empty space on the screen, and the selected reflector will follow. This is useful when a reflector is difficult to select due to being to close to other objects or if the screen is overcrowded").setCancelable(true)
 					.setPositiveButton("Ok", null);
 			AlertDialog alert = builder.create();
 			alert.show();
